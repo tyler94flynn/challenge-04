@@ -1,0 +1,75 @@
+body {
+    color:white;
+}
+
+.choice-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    width: 100%;
+    border-radius: 4px;
+    background: purple;
+    font-size: 3rem;
+    min-width: 80rem;
+}
+
+.choice-container:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+.choice-prefix {
+    padding: 2rem 2.5rem;
+    color: white
+}
+
+.choice-text {
+    padding: 2rem;
+    width: 100%;
+}
+
+.correct {
+    background: green
+}
+
+.correct {
+    background: red
+}
+
+/* hud */
+#hud {
+    display: flex;
+    justify-content: space-between
+}
+
+.hud-prefix {
+    color: black;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.hud-main-text {
+    text-align: center;
+}
+
+#progressBar {
+    width: 20rem;
+    height: 3rem;
+    border: 0.2rem solid black;  
+    margin-top: 2rem;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+#progressBarFull {
+    height: 100%;
+    background: black;
+    width: 0%
+}
+
+
+@media screen and (max-width: 768px) {
+    .choice-container {
+        min-width: 40rem;
+    }
+}
