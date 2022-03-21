@@ -4,11 +4,11 @@ const progressText = document.querySelector("#progressText");
 const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#ProgressBarFull");
 
-let current = {};
-let acceptingAnswers = true;
-let score = 0;
+let current = {}
+let acceptingAnswers = true
+let score = 0
 let questionCounter = 0
-let availableQuestions = [];
+let availableQuestions = []
 
 let questions = [
     { 
@@ -51,38 +51,38 @@ let questions = [
         choice4: "console.log", 
         answer: 4,
     }
-];
+]
 
-const scorePoints = 100;
-const totalQuestions = 5;
+const scorePoints = 100
+const totalQuestions = 5
 
 startGame = () => {
-    questionCounter = 0;
-    score = 0;
-    availableQuestions = [...questions];
-    getQuestion();
-};
+    questionCounter = 0
+    score = 0
+    availableQuestions = [...questions]
+    getNewQuestion()
+}
 
-getQuestion = () => {
+getNewQuestion = () => {
     if(availableQuestions.length === 0 || questionCounter > totalQuestions) {
-        localStorage.setItem("mostRecentScore", score);
+        localStorage.setItem("mostRecentScore", score)
 
-        return window.location.assign("/end.html");
-    };
+        return window.location.assign("/end.html")
+    }
 
-    questionCounter++;
+    questionCounter++
     
-    progressText.innerText = `Question ${questionCounter} of ${totalQuestions}`;
+    progressText.innerText = `Question ${questionCounter} of ${totalQuestions}`
     
-    progressBarFull.style.width = `${(questionCounter/totalQuestions) * 100}%`;
+    progressBarFull.style.width = `${(questionCounter/totalQuestions) * 100}%`
 
-    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-    currentQuestion = availableQuestions[questionIndex];
-    question.innterText = currentQuestion.question;
+    const questionIndex = Math.floor(Math.random() * availableQuestions.length)
+    currentQuestion = availableQuestions[questionIndex]
+    question.innerText = currentQuestion.question
     
     choices.forEach(choice => {
-        const number = choice.dataset["number"];
-        choice.innerText = currentQuestion["choice"+ number];
+        const number = choice.dataset["number"]
+        choice.innerText = currentQuestion["choice"+ number]
     })
 
     availableQuestions.splice(questionIndex, 1);
@@ -94,26 +94,35 @@ choices.forEach(choice => {
     choice.addEventListener('click', e => {
         if(!acceptingAnswers) return
 
-        acceptingAnswers = false;
-        const selectedChoice = e.target;
-        const selectedAnswer = selectedChoice.dataset["number"];
+        acceptingAnswers = false
+        const selectedChoice = e.target
+        const selectedAnswer = selectedChoice.dataset["number"]
 
-        var classToApply = selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
+        var classToApply = selectedAnswer == currentQuestion.answer ? "correct" : "incorrect"
 
         if(classToApply === "correct") {
-            incrementScore(scorePoints);
+            incrementScore(scorePoints)
+        } else {
+            decrementScore(scorePoints)
         }
 
         selectedChoice.parentElement.classList.add(classToApply);
 
         setTimeout(() => {
-            selectedChoice.parentElement.classList.remove(classToApply);
+            selectedChoice.parentElement.classList.remove(classToApply)
             getNewQuestion()
-        }, 1000);
-    });
-});
+        }, 1000)
+    })
+})
 
 incrementScore = num => {
-    score+=num;
-    score.innerText = score;
+    score += num
+    scoreText.innerText = score
 }
+
+decrementScore = num => {
+    score -= num
+    scoreText.innerText = score
+} 
+
+startGame()
